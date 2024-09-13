@@ -1,40 +1,64 @@
 # BJ_LED_M
 
-**BJ_LED_M** is a Python library designed for controlling MohuanLED Bluetooth lights. With this library, you can turn lights on/off, change colors, and apply various effects such as fading, strobe, and rainbow cycles. It also includes a GUI using **PyQt6** for intuitive control of the lights.
+**BJ_LED_M** es una librería de Python diseñada para controlar los LEDs de la marca MohuanLED mediante Bluetooth directamente destu Laptop u Ordenador de mesa (en este caso es necesario un adaptador Bluetooth). Esta librería hace desde cosas simples como encender/apagar, cambiar colores hasta aplicar animaciones, reacciones a acciones del exterior, entre otros. También incluye un GUI construido sobre **PyQt6** para un control más intuitivo sobre las luces.
 
-## Features
+## Uso
+La librería es completamente asíncrona, por lo tanto es necesario el uso de `asyncio` y `await`. En este ejemplo se establece una conección directa conociendo el UUID y la dirección de los LEDs
+```python
+from bj_led import BJLEDInstance
+import asyncio
 
-- Control MohuanLED lights via Bluetooth (BLE).
-- Turn lights on and off.
-- Change colors using RGB values.
-- Apply effects such as:
-  - Color fading
-  - Strobe light effect
-  - Breathing light effect
-  - Rainbow color cycle
-  - Wave effects between colors
-- GUI interface using **PyQt6**.
-- CLI support for basic operations.
+ADRESS = '64:11:a8:00:8b:a6'                       # dirección de ejemplo
+UUID = '0000ee02-0000-1000-2000-00805f9b34fb'      # UUID de ejemplo
 
-## Installation
+async def main():
+    led = BJLEDInstance(address = ADRESS, uuid = UUID)
 
-### Requirements
+    await led.turn_on()
+    await led.set_color_to_rgb(255, 0, 0)          # Se cambia el color a rojo en RGB
 
-- Python 3.8 or above
-- Bluetooth-enabled device
-- MohuanLED lights
+    asyncio.sleep(5)                               # Se espera 5 segundos
+    await led.turn_off()                           # Se apagan los LEDs y se desconecta correctamente
+    await led._disconnect()                        # para limpiar el buffer correctamente
+ 
 
-You can install the library using `pip`:
+asyncio.run(main())
+```
 
+## Funcionalidades
+
+- Controlar MohuanLED via Bluetooth (BLE).
+- Apagar y encender los LEDs
+- Cambiar de color en todo el expectro RGB
+- Aplicar efectos como:
+  - Desbanecimiento de color.
+  - Parpadeo de color.
+  - Efecto de respiración entre colores.
+  - Ciclo arcoíris.
+  - Efecto de olas
+- Interfaz gráfica usando **PyQt6** (En desarrollo)
+- Soporte de CLI para comandos básicos.
+
+## Instalación
+
+### Requisitos
+
+- Python 3.8 o superior
+- Chip Bluetooth integrado o adaptador.
+- Luces de MohuanLED.
+
+La librería puede ser instalada mediante `pip`:
 ```bash
 pip install BJ_LED_M
 ```
-Alternatively, you can install directly from the source:
+
+O instalar directamente desde los recursos:
 ```bash
 git clone https://github.com/yourusername/BJ_LED_M.git
 cd BJ_LED_M
 pip install .
 ```
+
 Usage
 Command Line Interface (CLI)
 After installation, you can control the lights using the CLI. For example, to turn on the lights:
