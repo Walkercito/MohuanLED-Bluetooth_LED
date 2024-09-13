@@ -1,7 +1,7 @@
-#🌈 MohuanLED Bluetooth Control
+# 🌈 MohuanLED Bluetooth Control
 BJ_LED_M is a Python library designed to control MohuanLED brand lights via Bluetooth, directly from your laptop or PC (you’ll need a Bluetooth adapter if it’s not built-in). This library allows you to perform simple actions like turning the lights on/off, changing colors, and applying animations or reactions to external events. It also includes a PyQt6-based GUI for more intuitive control over the lights. 🌟
 
-##🚀 Usage
+## 🚀 Usage
 The library is fully asynchronous, so you'll need to use asyncio and await. Here's an example of how to establish a direct connection, knowing the UUID and MAC address of the LEDs:
 
 ```python
@@ -25,7 +25,7 @@ async def main():
 asyncio.run(main())
 ```
 
-##⚙️ Features
+## ⚙️ Features
 - Control MohuanLED lights via Bluetooth (BLE)
 - Turn the LEDs on and off 💡
 - Change colors across the full RGB spectrum 🎨
@@ -109,7 +109,7 @@ Install the dependencies:
 pip install -r requirements.txt
 ```
 
-###📜 License
+### 📜 License
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ### Acknowledgments
