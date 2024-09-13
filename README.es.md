@@ -1,4 +1,4 @@
-# BJ_LED_M
+# MohuanLED Bluetooth Control
 
 **BJ_LED_M** es una librería de Python diseñada para controlar los LEDs de la marca MohuanLED mediante Bluetooth directamente destu Laptop u Ordenador de mesa (en este caso es necesario un adaptador Bluetooth). Esta librería hace desde cosas simples como encender/apagar, cambiar colores hasta aplicar animaciones, reacciones a acciones del exterior, entre otros. También incluye un GUI construido sobre **PyQt6** para un control más intuitivo sobre las luces.
 
@@ -36,14 +36,17 @@ asyncio.run(main())
   - Efecto de respiración entre colores.
   - Ciclo arcoíris.
   - Efecto de olas
-- Interfaz gráfica usando **PyQt6** (En desarrollo)
-- Soporte de CLI para comandos básicos.
+- Interfaz gráfica usando **PyQt6** (En desarrollo).
+- Soporte de CLI para comandos básicos (En desarrollo).
+- Escaner de dispositivos de la marca llamados 'BJ_LED' para conecciones dinámicas (En desarrollo).
+- Detector de UUIDs y direcciones de forma dinámica 
 
 ## Instalación
 
 ### Requisitos
 
-- Python 3.8 o superior
+- Python 3.8 o superior.
+- PyQt6 y qasync.
 - Chip Bluetooth integrado o adaptador.
 - Luces de MohuanLED.
 
@@ -52,52 +55,20 @@ La librería puede ser instalada mediante `pip`:
 pip install BJ_LED_M
 ```
 
-O instalar directamente desde los recursos:
+O instalar directamente desde la raíz:
 ```bash
-git clone https://github.com/yourusername/BJ_LED_M.git
+git clone https://github.com/Walkercito/MohuanLED-Bluetooth_LED
 cd BJ_LED_M
 pip install .
 ```
 
-Usage
-Command Line Interface (CLI)
-After installation, you can control the lights using the CLI. For example, to turn on the lights:
-
-bash
-Copiar código
-bjled-cli --on
-To turn off the lights:
-
-bash
-Copiar código
-bjled-cli --off
-Python API
-You can also control the lights programmatically in your Python scripts. Below are some examples of how to use the library.
-
-Basic Example
-python
-Copiar código
-from bj_led import BJLEDInstance
-
-# Create an instance of the LED controller
-led = BJLEDInstance(address="xx:xx:xx:xx:xx", uuid="0000xxxx-0000-1000-8000-00805f9b34fb")
-
-# Turn the LED on
-led.turn_on()
-
-# Change the LED color to red
-led.set_color_to_rgb(255, 0, 0)
-
-# Turn the LED off
-led.turn_off()
-Applying Effects
-You can apply different effects to the lights, such as a rainbow cycle or a strobe effect.
-
+Aplicando efectos.
+Puedes añadir diferentes efectos a las luces como los pueden ser `rainbow_cycle`, `wave_effect`, `strobe_light`, etc.
 ```python
-# Apply a rainbow cycle effect
-await led.rainbow_cycle(duration_per_color=5.0)
+# Aplica el efecto 'rainbow_cycle'
+await led.rainbow_cycle(duration_per_color = 5.0)
 
-# Apply a strobe effect with 10 flashes
+# Aplica el efecto `'strobe_light' con 10 parpadeos
 await led.strobe_light(color=(255, 255, 255), duration=5.0, flashes=10)
 ```
 
@@ -126,22 +97,18 @@ If you want to contribute or modify the project, you can set up the development 
 
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/BJ_LED_M.git
+git clone https://github.com/Walkercito/MohuanLED-Bluetooth_LED
 ```
 
 Install the dependencies:
 ```bash
 pip install -r requirements.txt
-Run the tests:
-```
-
-```bash
-pytest
 ```
 
 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Este proyecto está resguardado tras MIT Licence - vea el archivo LICENCE para más infomación.
 
-Acknowledgments
-- Bleak: For handling Bluetooth Low Energy (BLE) connections.
-- PyQt6: For the graphical user interface framework.
+### Acknowledgments
+- Bleak: Para manipular dispositvos Bluetooth de Baja Energía (BLE).
+- PyQt6: Para los gráficos del interfaz.
+- qasync: Para manejar prosecos asíncronos dentro de PyQt6
