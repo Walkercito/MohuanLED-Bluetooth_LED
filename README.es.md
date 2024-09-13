@@ -1,8 +1,8 @@
-# MohuanLED Bluetooth Control
+# 🌈MohuanLED Bluetooth Control
 
-**BJ_LED_M** es una librería de Python diseñada para controlar los LEDs de la marca MohuanLED mediante Bluetooth directamente destu Laptop u Ordenador de mesa (en este caso es necesario un adaptador Bluetooth). Esta librería hace desde cosas simples como encender/apagar, cambiar colores hasta aplicar animaciones, reacciones a acciones del exterior, entre otros. También incluye un GUI construido sobre **PyQt6** para un control más intuitivo sobre las luces.
+**BJ_LED_M** es una librería de Python diseñada para controlar los LEDs de la marca **MohuanLED** mediante Bluetooth desde tu laptop o PC (se requiere un adaptador Bluetooth si no tienes uno integrado). Esta librería te permite realizar acciones simples como encender/apagar, cambiar colores, hasta aplicar animaciones y reacciones a eventos externos. También incluye una **GUI** construida con **PyQt6** para un control más intuitivo sobre las luces. 🌟
 
-## Uso
+## 🚀Uso
 La librería es completamente asíncrona, por lo tanto es necesario el uso de `asyncio` y `await`. En este ejemplo se establece una conección directa conociendo el UUID y la dirección de los LEDs
 ```python
 from bj_led import BJLEDInstance
@@ -18,30 +18,30 @@ async def main():
     await led.set_color_to_rgb(255, 0, 0)          # Se cambia el color a rojo en RGB
 
     asyncio.sleep(5)                               # Se espera 5 segundos
-    await led.turn_off()                           # Se apagan los LEDs y se desconecta correctamente
-    await led._disconnect()                        # para limpiar el buffer correctamente
+    await led.turn_off()                           # Se apagan los LEDs
+    await led._disconnect()                        # Se desconecta y limpia el buffer
  
 
 asyncio.run(main())
 ```
 
-## Funcionalidades
+## ⚙️Funcionalidades
 
 - Controlar MohuanLED via Bluetooth (BLE).
-- Apagar y encender los LEDs
-- Cambiar de color en todo el expectro RGB
+- Encender y apagar las luces 💡
+- Cambiar colores en todo el espectro RGB 🎨
 - Aplicar efectos como:
-  - Desbanecimiento de color.
-  - Parpadeo de color.
-  - Efecto de respiración entre colores.
-  - Ciclo arcoíris.
-  - Efecto de olas
-- Interfaz gráfica usando **PyQt6** (En desarrollo).
-- Soporte de CLI para comandos básicos (En desarrollo).
-- Escaner de dispositivos de la marca llamados 'BJ_LED' para conecciones dinámicas (En desarrollo).
-- Detector de UUIDs y direcciones de forma dinámica 
+  - 🔄 Desvanecimiento de color
+  - 💡 Parpadeo de color
+  - 🌬️ Efecto de respiración entre colores
+  - 🌈 Ciclo arcoíris
+  - 🌊 Efecto de olas
+- Interfaz gráfica (GUI) con **PyQt6** (En desarrollo 🛠️)
+- Soporte de CLI para comandos básicos (En desarrollo 🛠️)
+- Escáner de dispositivos MohuanLED para conexiones dinámicas (En desarrollo 🛠️)
+- Detección automática de UUIDs y direcciones MAC
 
-## Instalación
+## 🛠️ Instalación
 
 ### Requisitos
 
@@ -62,7 +62,7 @@ cd BJ_LED_M
 pip install .
 ```
 
-Aplicando efectos.
+### 🌈 Aplicando Efectos
 Puedes añadir diferentes efectos a las luces como los pueden ser `rainbow_cycle`, `wave_effect`, `strobe_light`, etc.
 ```python
 # Aplica el efecto 'rainbow_cycle'
@@ -72,43 +72,43 @@ await led.rainbow_cycle(duration_per_color = 5.0)
 await led.strobe_light(color=(255, 255, 255), duration=5.0, flashes=10)
 ```
 
-GUI Control
-The library also provides a graphical user interface (GUI) built with PyQt6 to control the lights visually.
+### 🖥️ Control mediante GUI
+La librería también ofrece una interfaz gráfica (GUI) construida con PyQt6 para controlar las luces de manera visual.
 
-To launch the GUI:
+Para lanzar la GUI:
 ```bash
 python -m bj_led.gui.app
 ```
-The GUI provides sliders for adjusting the RGB values and buttons to control the lights and apply effects like fading and color cycling.
+La GUI incluye deslizadores para ajustar los valores RGB y botones para controlar las luces y aplicar efectos como desvanecimientos y ciclos de color.
 
-Configuration
-To configure your setup, you can use an .env file to store your MohuanLED light's MAC address and UUID.
+### ⚙️ Configuración
+Puedes usar un archivo `.env` para almacenar la dirección MAC y el UUID de tus luces **MohuanLED** o establecerlas directamente en tu código.
 
-Create a .env file in the project directory with the following structure:
+Crea un archivo `.env` en el directorio del proyecto con la siguiente estructura:
 
 ```bash
-LED_MAC_ADDRESS=xx:xx:xx:xx:xx:xx
-LED_UUID=0000xxxx-0000-1000-8000-00805f9b34fb
+LED_MAC_ADDRESS = "xx:xx:xx:xx:xx:xx"
+LED_UUID = "0000xxxx-0000-1000-8000-00805f9b34fb"
 ```
-The library will automatically load these values when instantiated.
+La librería cargará estos valores automáticamente al instanciar los LEDs.
 
-Development
-If you want to contribute or modify the project, you can set up the development environment as follows:
+### 🛠️ Desarrollo
+Si deseas contribuir o modificar el proyecto, puedes configurar el entorno de desarrollo de la siguiente manera:
 
-Clone the repository:
+Clona el repositorio:
 ```bash
 git clone https://github.com/Walkercito/MohuanLED-Bluetooth_LED
 ```
 
-Install the dependencies:
+Instala las dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-License
-Este proyecto está resguardado tras MIT Licence - vea el archivo LICENCE para más infomación.
+### 📜 Licencia
+Este proyecto está licenciado bajo la **MIT License**. Consulta el archivo LICENSE para más detalles.
 
-### Acknowledgments
-- Bleak: Para manipular dispositvos Bluetooth de Baja Energía (BLE).
-- PyQt6: Para los gráficos del interfaz.
-- qasync: Para manejar prosecos asíncronos dentro de PyQt6
+### Agradecimientos
+- Bleak: Para manipulación de dispositivos Bluetooth Low Energy (BLE) 🔗
+- PyQt6: Para la creación de la interfaz gráfica 🖼️
+- qasync: Para manejar procesos asíncronos en PyQt6 ⚡
