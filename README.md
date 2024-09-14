@@ -5,7 +5,6 @@ BJ_LED_M is a Python library designed to control MohuanLED brand lights via Blue
 The library is fully asynchronous, so you'll need to use asyncio and await. Here's an example of how to establish a direct connection, knowing the UUID and MAC address of the LEDs:
 
 ```python
-Copiar código
 from bj_led import BJLEDInstance
 import asyncio
 
@@ -14,13 +13,16 @@ UUID = '0000ee02-0000-1000-2000-00805f9b34fb'      # Example UUID
 
 async def main():
     led = BJLEDInstance(address=ADDRESS, uuid=UUID)
+    try:
+        await led.turn_on()
+        await led.set_color_to_rgb(255, 0, 0)          # Change color to red (RGB)
 
-    await led.turn_on()
-    await led.set_color_to_rgb(255, 0, 0)          # Change color to red (RGB)
-
-    await asyncio.sleep(5)                         # Wait 5 seconds
-    await led.turn_off()                           # Turn off LEDs and disconnect
-    await led._disconnect()                        # Clear the buffer
+        await asyncio.sleep(5)                         # Wait 5 seconds
+        await led.turn_off()                           # Turn off LEDs and disconnect
+    except Exception as e:
+        print(e)
+    finally:
+        await led._disconnect()                        # Clear the buffer
      
 asyncio.run(main())
 ```
