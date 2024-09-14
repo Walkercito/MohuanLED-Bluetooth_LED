@@ -5,49 +5,57 @@ BJ_LED_M is a Python library designed to control MohuanLED brand lights via Blue
 The library is fully asynchronous, so you'll need to use asyncio and await. Here's an example of how to establish a direct connection, knowing the UUID and MAC address of the LEDs:
 
 ```python
-import asyncio
 from bluelights import BJLEDInstance
+import asyncio
 
 ADDRESS = '64:11:a8:00:8b:a6'                      # Example address
 UUID = '0000ee02-0000-1000-2000-00805f9b34fb'      # Example UUID
 
 async def main():
-    led = BJLEDInstance(address = ADDRESS, uuid = UUID)
-    try:
-        await led.initialize()
-        await led.turn_on()
-        await asyncio.sleep(2)
-        await led.turn_off()
-    except ValueError as e:
-        print(f"Error: {e}")
-    finally:
-        await led._disconnect()
+    led = BJLEDInstance(address=ADDRESS, uuid=UUID)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+      await led.turn_on()
+      await led.set_color_to_rgb(255, 0, 0)          # Change color to red (RGB)
+
+      await asyncio.sleep(5)                         # Wait 5 seconds
+      await led.turn_off()                           # Turn off LEDs and disconnect
+    except Exception as e:
+      print(e)
+      
+    finally:
+      await led._disconnect()                        # Clear the buffer
+     
+asyncio.run(main())
 ```
 
-A dynamic example with the same orders:
+To preform a dynamic connection, you need to use `.initialize()` to make the Scanner look any LED, here an example:
+
 ```python
+from bluelights import BJLEDInstance
 import asyncio
-from bluelights.manager import BJLEDInstance
 
 async def main():
-    led = BJLEDInstance()
-    
+    led = BJLEDInstance()                          # The Scanner will look for 'BJ_LED_M' (name of the devices) and connect
     try:
-        await led.initialize()
-        await led.turn_on()
-        await asyncio.sleep(2)
-        await led.turn_off()
-    except ValueError as e:
-        print(f"Error: {e}")
-    finally:
-        await led._disconnect()
+      await led.initialize()
+      await led.turn_on()
+      await led.set_color_to_rgb(255, 0, 0)          # Change color to red (RGB)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+      await asyncio.sleep(5)                         # Wait 5 seconds
+      await led.turn_off()                           # Turn off LEDs and disconnect
+    except Exception as e:
+      print(e)
+
+    finally:
+      await led._disconnect()                        # Clear the buffer
+     
+asyncio.run(main())
 ```
+
+> [!WARNING]  
+> If you do not proive a MAC Address or a UUID the code WILL requiere `initialize()`
+
 
 ## ⚙️ Features
 - Control MohuanLED lights via Bluetooth (BLE)
@@ -143,3 +151,4 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 - qasync: For handling asynchronous processes in PyQt6 ⚡
 - python-dotenv: For auto-loading of LED_MAC_ADDRESS and LED_UUID in case of a `.env` file
 - nest_asyncio: For asyncio control
+
