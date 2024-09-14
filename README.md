@@ -53,7 +53,7 @@ async def main():
 asyncio.run(main())
 ```
 
-> [!WARNING]  
+[!WARNING]  
 > If you do not proive a MAC Address or a UUID the code WILL requiere `initialize()`
 
 
@@ -151,4 +151,3 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 - qasync: For handling asynchronous processes in PyQt6 ⚡
 - python-dotenv: For auto-loading of LED_MAC_ADDRESS and LED_UUID in case of a `.env` file
 - nest_asyncio: For asyncio control
-
