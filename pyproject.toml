@@ -1,0 +1,175 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bluelights"
+version = "0.2.0"
+description = "Modern Python library for controlling MohuanLED Bluetooth lights"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Walkercito", email = "walkercitoliver@gmail.com"}
+]
+keywords = ["bluetooth", "led", "lighting", "iot", "mohuanled"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Home Automation",
+    "Topic :: Communications",
+    "Topic :: System :: Hardware"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "bleak==0.22.2",           # Versión específica que funcionaba
+    "python-dotenv>=1.0.0",
+    "nest-asyncio>=1.6.0",     # Importante para event loops
+]
+
+[project.optional-dependencies]
+gui = [
+    "PyQt6==6.7.1",           # Versión específica
+    "qasync==0.27.1",         # Versión específica
+]
+cli = [
+    "click>=8.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "pre-commit>=3.5.0",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.12.0",
+]
+all = [
+    "bluelights[gui,cli]",
+]
+
+[project.urls]
+Homepage = "https://github.com/Walkercito/MohuanLED-Bluetooth_LED"
+Documentation = "https://github.com/Walkercito/MohuanLED-Bluetooth_LED#readme"
+Repository = "https://github.com/Walkercito/MohuanLED-Bluetooth_LED"
+"Bug Tracker" = "https://github.com/Walkercito/MohuanLED-Bluetooth_LED/issues"
+
+[project.scripts]
+bluelights-gui = "bluelights.gui:cli_main"
+bluelights-cli = "bluelights.cli:main"
+bluelights-scan = "bluelights.cli:scan_devices"
+bluelights-debug = "bluelights.debug_cli:main"
+
+[project.entry-points."bluelights.plugins"]
+# Future plugin system
+
+[tool.hatch.build.targets.wheel]
+packages = ["bluelights"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/bluelights",
+    "/README.md",
+    "/LICENSE",
+]
+
+# === Development Tools ===
+
+[tool.black]
+line-length = 100
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.9"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+    "bleak.*",
+    "PyQt6.*",
+    "qasync.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "bluetooth: marks tests that require bluetooth hardware",
+]
+
+[tool.coverage.run]
+source = ["bluelights"]
+omit = [
+    "*/tests/*",
+    "*/gui/*",  # GUI tests are complex, separate coverage
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
